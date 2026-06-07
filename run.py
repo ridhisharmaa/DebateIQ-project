@@ -2,7 +2,7 @@
 run.py
 Master script — run any stage of the DebateIQ pipeline.
 
-Usage:
+Usage::
   python run.py eda          # exploratory data analysis
   python run.py train        # train the model
   python run.py evaluate     # evaluate on test set + plots
