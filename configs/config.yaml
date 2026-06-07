@@ -1,0 +1,47 @@
+project:
+  name: DebateIQ
+  seed: 42
+
+data:
+  dataset_name: "ibm_claim_stance"         # HuggingFace dataset id
+  fallback_csv: "data/ibm_debater.csv"     # local fallback
+  max_length: 128                           # SBERT tokenizer max tokens
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  context_window: 3                         # sentences before/after for BiLSTM context
+
+model:
+  sbert_model: "sentence-transformers/paraphrase-MiniLM-L6-v2"
+  sbert_dim: 384
+  bilstm_hidden: 128
+  bilstm_layers: 2
+  bilstm_dropout: 0.3
+  fc_hidden: 64
+  num_claim_labels: 2        # claim / non-claim
+  num_premise_labels: 2      # premise / non-premise
+  num_stance_labels: 3       # PRO / CON / NONE
+
+training:
+  batch_size: 32
+  epochs: 20
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_steps: 100
+  gradient_clip: 1.0
+  early_stopping_patience: 4
+  f1_average: "macro"
+
+inference:
+  confidence_threshold: 0.5
+  max_inference_time_ms: 3000
+
+paths:
+  model_dir: "models/saved"
+  onnx_dir: "models/onnx"
+  logs_dir: "logs"
+  results_dir: "results"
+
+wandb:
+  project: "debateiq"
+  entity: null          # set your wandb username here
